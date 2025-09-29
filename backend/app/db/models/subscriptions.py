@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from enum import Enum as PyEnum
-from typing import TYPE_CHECKING, List
+
+from typing import TYPE_CHECKING, List, Optional
 
 from sqlalchemy import Date, DateTime, Enum, ForeignKey, JSON, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -36,8 +37,10 @@ class Subscription(Base):
     settings: Mapped[dict] = mapped_column(JSON, default=dict)
 
     user: Mapped["User"] = relationship(back_populates="subscriptions", lazy="selectin")
-    template: Mapped["OrderTemplate" | None] = relationship(lazy="selectin")
-    payment_token: Mapped["PaymentToken" | None] = relationship(lazy="selectin")
+
+    template: Mapped[Optional["OrderTemplate"]] = relationship(lazy="selectin")
+    payment_token: Mapped[Optional["PaymentToken"]] = relationship(lazy="selectin")
+
     weeks: Mapped[List["SubscriptionWeek"]] = relationship(back_populates="subscription", cascade="all, delete-orphan", lazy="selectin")
     payment_intents: Mapped[List["PaymentIntent"]] = relationship(lazy="selectin")
 
@@ -52,4 +55,5 @@ class SubscriptionWeek(Base):
     order_id: Mapped[int | None] = mapped_column(ForeignKey("orders.id", ondelete="SET NULL"))
 
     subscription: Mapped[Subscription] = relationship(back_populates="weeks")
-    order: Mapped["Order" | None] = relationship(lazy="selectin")
+
+    order: Mapped[Optional["Order"]] = relationship(lazy="selectin")

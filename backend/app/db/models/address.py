@@ -28,6 +28,6 @@ class Address(Base):
     is_default: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
     user: Mapped["User"] = relationship(back_populates="addresses", lazy="joined")
-      
+
     delivery_zone: Mapped["DeliveryZone | None"] = relationship(back_populates="addresses", lazy="selectin")
 

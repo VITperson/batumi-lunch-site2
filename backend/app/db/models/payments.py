@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum as PyEnum
-from typing import TYPE_CHECKING
+
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -38,9 +39,8 @@ class PaymentIntent(Base):
     return_url: Mapped[str | None] = mapped_column(String(255))
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    order: Mapped["Order" | None] = relationship(lazy="selectin")
-    subscription: Mapped["Subscription" | None] = relationship(lazy="selectin")
-
+    order: Mapped[Optional["Order"]] = relationship(lazy="selectin")
+    subscription: Mapped[Optional["Subscription"]] = relationship(lazy="selectin")
 
 class PaymentToken(Base):
     __tablename__ = "payment_tokens"
