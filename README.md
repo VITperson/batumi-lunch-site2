@@ -13,6 +13,7 @@
 ```bash
 # 1. Склонируйте репозиторий и перейдите в директорию проекта
 cp .env.sample .env    # настройте DATABASE_URL, если локальный пользователь Postgres не "postgres"
+
 make install           # установка зависимостей backend/frontend
 make migrate           # применение миграций (использует deploy/alembic.ini)
 make seed              # сидинг примерного меню
