@@ -9,7 +9,13 @@ install-frontend:
 	cd frontend && npm install
 
 migrate:
-	alembic -c deploy/alembic.ini upgrade head
+
+	@if docker compose -f deploy/docker-compose.yml ps --services --filter "status=running" | grep -q "^api$$"; then \
+		docker compose -f deploy/docker-compose.yml exec api alembic -c deploy/alembic.ini upgrade head; \
+	else \
+		alembic -c deploy/alembic.ini upgrade head; \
+	fi
+
 
 seed:
 	python scripts/seed_menu.py

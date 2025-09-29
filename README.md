@@ -22,6 +22,10 @@ make serve-api         # запуск FastAPI на http://localhost:8000
 make serve-web         # запуск Next.js на http://localhost:3000
 ```
 
+
+`make migrate` автоматически запускает Alembic внутри контейнера `api`, если он поднят через `docker compose up`. В противном
+случае миграции применяются с хоста и используют `DATABASE_URL` из вашего `.env`.
+
 Или через Docker:
 
 ```bash
@@ -60,9 +64,13 @@ make lint   # python -m compileall + next lint
 См. `.env.sample`. Для локального запуска создайте `.env` или `.env.local` с переопределениями.
 
 
-- `DATABASE_URL` по умолчанию использует peer-авторизацию (`postgresql+asyncpg:///batumi_lunch`). Если у вас настроен другой
-  пользователь/пароль, пропишите их в `.env`.
+- `DATABASE_URL` по умолчанию использует peer-авторизацию (`postgresql+asyncpg:///batumi_lunch`). Если вы запускаете стек
+  через `docker compose`, пропишите `postgresql+asyncpg://batumi:batumi@localhost:5432/batumi_lunch`, потому что контейнер
+  Postgres создаёт именно такого пользователя. В нативной установке Postgres либо создайте роль/базу командой
+  `createuser -s batumi && createdb batumi_lunch`, либо задайте своего пользователя и пароль в DSN.
 - `REDIS_URL`, `SECRET_KEY`, `LOG_LEVEL` и другие параметры также можно переопределять через `.env`.
+
+
 ## TODO / Ограничения
 
 - `orders/checkout` реализован для режима `single`; multiweek/subscription оставлены как TODO и помечены HTTP 501.
