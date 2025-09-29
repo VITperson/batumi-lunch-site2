@@ -12,7 +12,9 @@
 
 ```bash
 # 1. Склонируйте репозиторий и перейдите в директорию проекта
+
 cp .env.sample .env    # настройте DATABASE_URL, если локальный пользователь Postgres не "postgres"
+
 make install           # установка зависимостей backend/frontend
 make migrate           # применение миграций (использует deploy/alembic.ini)
 make seed              # сидинг примерного меню
@@ -57,10 +59,10 @@ make lint   # python -m compileall + next lint
 
 См. `.env.sample`. Для локального запуска создайте `.env` или `.env.local` с переопределениями.
 
+
 - `DATABASE_URL` по умолчанию использует peer-авторизацию (`postgresql+asyncpg:///batumi_lunch`). Если у вас настроен другой
   пользователь/пароль, пропишите их в `.env`.
 - `REDIS_URL`, `SECRET_KEY`, `LOG_LEVEL` и другие параметры также можно переопределять через `.env`.
-
 ## TODO / Ограничения
 
 - `orders/checkout` реализован для режима `single`; multiweek/subscription оставлены как TODO и помечены HTTP 501.
