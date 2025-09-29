@@ -42,6 +42,7 @@ class PaymentIntent(Base):
     order: Mapped[Optional["Order"]] = relationship(lazy="selectin")
     subscription: Mapped[Optional["Subscription"]] = relationship(lazy="selectin")
 
+
 class PaymentToken(Base):
     __tablename__ = "payment_tokens"
 

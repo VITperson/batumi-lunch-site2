@@ -16,7 +16,9 @@ class Settings(BaseSettings):
     project_name: str = Field(default="Batumi Lunch Platform")
     environment: Literal['local', 'test', 'development', 'staging', 'production'] = Field(default='local')
     api_v1_str: str = Field(default="/api/v1")
-    database_url: str = Field(default="postgresql+asyncpg://postgres:postgres@localhost:5432/batumi_lunch")
+
+    database_url: str = Field(default="postgresql+asyncpg:///batumi_lunch")
+
     redis_url: str = Field(default="redis://localhost:6379/0")
     secret_key: str = Field(default="changeme")
     access_token_expire_minutes: int = Field(default=30)

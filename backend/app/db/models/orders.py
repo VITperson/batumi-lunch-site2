@@ -5,7 +5,6 @@ from enum import Enum as PyEnum
 
 from typing import TYPE_CHECKING, List, Optional
 
-
 from sqlalchemy import Boolean, Date, DateTime, Enum, ForeignKey, Integer, JSON, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

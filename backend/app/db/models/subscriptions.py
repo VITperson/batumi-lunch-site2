@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from enum import Enum as PyEnum
-
 from typing import TYPE_CHECKING, List, Optional
 
 from sqlalchemy import Date, DateTime, Enum, ForeignKey, JSON, Numeric, String
@@ -55,5 +54,4 @@ class SubscriptionWeek(Base):
     order_id: Mapped[int | None] = mapped_column(ForeignKey("orders.id", ondelete="SET NULL"))
 
     subscription: Mapped[Subscription] = relationship(back_populates="weeks")
-
     order: Mapped[Optional["Order"]] = relationship(lazy="selectin")
