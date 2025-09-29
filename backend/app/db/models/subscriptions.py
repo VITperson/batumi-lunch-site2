@@ -36,10 +36,8 @@ class Subscription(Base):
     settings: Mapped[dict] = mapped_column(JSON, default=dict)
 
     user: Mapped["User"] = relationship(back_populates="subscriptions", lazy="selectin")
-
     template: Mapped[Optional["OrderTemplate"]] = relationship(lazy="selectin")
     payment_token: Mapped[Optional["PaymentToken"]] = relationship(lazy="selectin")
-
     weeks: Mapped[List["SubscriptionWeek"]] = relationship(back_populates="subscription", cascade="all, delete-orphan", lazy="selectin")
     payment_intents: Mapped[List["PaymentIntent"]] = relationship(lazy="selectin")
 

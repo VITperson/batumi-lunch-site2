@@ -8,14 +8,15 @@ install-backend:
 install-frontend:
 	cd frontend && npm install
 
+ALEMBIC_INI_HOST := $(abspath deploy/alembic.ini)
+ALEMBIC_INI_CONTAINER := deploy/alembic.ini
+
 migrate:
-
-	@if docker compose -f deploy/docker-compose.yml ps --services --filter "status=running" | grep -q "^api$$"; then \
-		docker compose -f deploy/docker-compose.yml exec api alembic -c deploy/alembic.ini upgrade head; \
-	else \
-		alembic -c deploy/alembic.ini upgrade head; \
-	fi
-
+       @if docker compose -f deploy/docker-compose.yml ps --services --filter "status=running" | grep -q "^api$$"; then \
+               docker compose -f deploy/docker-compose.yml exec api alembic -c $(ALEMBIC_INI_CONTAINER) upgrade head; \
+       else \
+               alembic -c "$(ALEMBIC_INI_HOST)" upgrade head; \
+       fi
 
 seed:
 	python scripts/seed_menu.py
