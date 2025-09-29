@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from enum import Enum as PyEnum
+
 from typing import TYPE_CHECKING, List, Optional
+
 
 from sqlalchemy import Boolean, Date, DateTime, Enum, ForeignKey, Integer, JSON, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -47,6 +49,7 @@ class Order(Base):
 
     user: Mapped[Optional["User"]] = relationship(back_populates="orders", lazy="selectin")
     template: Mapped[Optional["OrderTemplate"]] = relationship(back_populates="orders", lazy="selectin")
+
     week_selections: Mapped[List["WeekSelection"]] = relationship(back_populates="order", cascade="all, delete-orphan", lazy="selectin")
     payment_intents: Mapped[List["PaymentIntent"]] = relationship(back_populates="order", lazy="selectin")
 
